@@ -1,6 +1,6 @@
 FROM centos:7
 
-LABEL maintainer "luhuiguo@gmail.com"
+LABEL maintainer "29ygq@sina.com"
 
 ENV FASTDFS_PATH=/opt/fdfs \
     FASTDFS_BASE_PATH=/var/fdfs \
@@ -8,10 +8,12 @@ ENV FASTDFS_PATH=/opt/fdfs \
     GROUP_NAME= \
     TRACKER_SERVER=
 
-  
+#copy nginx.repo 
+COPY nginx.repo /etc/yum.repos.d/
 
-#get all the dependences
-RUN yum install -y git gcc make
+#get all the dependences and nginx
+RUN yum install -y git gcc make nginx vim\
+  && rm -rf /var/cache/yum/*
 
 #create the dirs to store the files downloaded from internet
 RUN mkdir -p ${FASTDFS_PATH}/libfastcommon \
@@ -34,11 +36,13 @@ RUN git clone --branch V5.11 --depth 1 https://github.com/happyfish100/fastdfs.g
  && ./make.sh install \
  && rm -rf ${FASTDFS_PATH}/fastdfs
 
-
-EXPOSE 22122 23000 8080 8888
+EXPOSE 22122 23000 8080 8888 80
 VOLUME ["$FASTDFS_BASE_PATH", "/etc/fdfs"]   
 
 COPY conf/*.* /etc/fdfs/
+
+RUN mkdir /nginx_conf
+COPY nginx_conf/*.conf /nginx_conf/
 
 COPY start.sh /usr/bin/
 

@@ -2,14 +2,14 @@ version: '3'
 services:
   tracker:
     container_name: tracker
-    image: luhuiguo/fastdfs
+    image: ygqygq2/fastdfs-nginx
     command: tracker
     network_mode: host
     volumes:   
       - /var/fdfs/tracker:/var/fdfs    
   storage0:
     container_name: storage0
-    image: luhuiguo/fastdfs
+    image: ygqygq2/fastdfs-nginx
     command: storage
     network_mode: host  
     environment:
@@ -18,7 +18,7 @@ services:
       - /var/fdfs/storage0:/var/fdfs
   # storage1:
   #   container_name: storage1
-  #   image: luhuiguo/fastdfs
+  #   image: ygqygq2/fastdfs-nginx
   #   command: storage
   #   network_mode: host  
   #   environment:
@@ -27,7 +27,7 @@ services:
   #     - /var/fdfs/storage1:/var/fdfs
   #  storage2:
   #   container_name: storage2
-  #   image: luhuiguo/fastdfs
+  #   image: ygqygq2/fastdfs-nginx
   #   command: storage
   #   network_mode: host  
   #   environment:
