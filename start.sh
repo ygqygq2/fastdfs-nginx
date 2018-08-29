@@ -40,12 +40,15 @@ function fdfs_set () {
 
 function nginx_set () {
     # start nginx.
-    cp /nginx_conf/${FASTDFS_MODE}.conf /etc/nginx/conf.d/
-    nginx
+    if [ "${FASTDFS_MODE}" = "storage" ]; then
+        cp -f /nginx_conf/conf.d/${FASTDFS_MODE}.conf /usr/local/nginx/conf/conf.d/
+        sed -i "s|group1|${GROUP_NAME}|g" /usr/local/nginx/conf/conf.d/${FASTDFS_MODE}.conf
+    fi
+    /usr/local/nginx/sbin/nginx
 }
 
-fdfs_set
-nginx_set
+fdfs_set $*
+nginx_set $*
 
 # wait for pid file(important!),the max start time is 5 seconds,if the pid number does not appear in 5 seconds,start failed.
 TIMES=5
