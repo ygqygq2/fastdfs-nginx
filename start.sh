@@ -1,6 +1,8 @@
 #!/bin/bash
 #set -e
 
+GROUP_NAME=${GROUP_NAME:-group1}
+
 function fdfs_set () {
     if [ "$1" = "monitor" ] ; then
         if [ -n "$TRACKER_SERVER" ] ; then  
@@ -23,9 +25,7 @@ function fdfs_set () {
         sed -i "s|tracker_server=.*$|tracker_server=${TRACKER_SERVER}|g" /etc/fdfs/client.conf
     fi
     
-    if [ -n "$GROUP_NAME" ] ; then  
-        sed -i "s|group_name=.*$|group_name=${GROUP_NAME}|g" /etc/fdfs/storage.conf
-    fi 
+    sed -i "s|group_name=.*$|group_name=${GROUP_NAME}|g" /etc/fdfs/storage.conf
     
     FASTDFS_LOG_FILE="${FASTDFS_BASE_PATH}/logs/${FASTDFS_MODE}d.log"
     PID_NUMBER="${FASTDFS_BASE_PATH}/data/fdfs_${FASTDFS_MODE}d.pid"
