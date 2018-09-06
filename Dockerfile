@@ -5,6 +5,7 @@ LABEL maintainer "29ygq@sina.com"
 ENV FASTDFS_PATH=/opt/fdfs \
     FASTDFS_BASE_PATH=/var/fdfs \
     NGINX_VERSION="1.14.0" \
+    TENGINE_VERSION="2.2.2" \
     PORT= \
     GROUP_NAME= \
     TRACKER_SERVER=
@@ -38,15 +39,17 @@ RUN git clone --depth 1 https://github.com/happyfish100/fastdfs.git ${FASTDFS_PA
 #comile nginx
 WORKDIR ${FASTDFS_PATH}/fastdfs-nginx-module
 
+# nginx url: https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+# tengine url: http://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz
 RUN git clone --depth 1 https://github.com/happyfish100/fastdfs-nginx-module.git ${FASTDFS_PATH}/fastdfs-nginx-module \
- && wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
- && tar -zxf nginx-${NGINX_VERSION}.tar.gz \
- && cd nginx-${NGINX_VERSION} \
+ && wget http://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz \
+ && tar -zxf tengine-${TENGINE_VERSION}.tar.gz \
+ && cd tengine-${TENGINE_VERSION} \
  && ./configure --prefix=/usr/local/nginx --add-module=${FASTDFS_PATH}/fastdfs-nginx-module/src/ \
  && make \
  && make install \
  && ln -s /usr/local/nginx/sbin/nginx /usr/bin/ \
- && rm -rf ${FASTDFS_PATH}/fastdfs-nginx-module
+ && rm -rf ${FASTDFS_PATH}/fastdfs-nginx-module \
 
 EXPOSE 22122 23000 8080 8888 80
 VOLUME ["$FASTDFS_BASE_PATH","/etc/fdfs","/usr/local/nginx/conf/conf.d"]   
