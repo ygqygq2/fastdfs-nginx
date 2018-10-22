@@ -55,7 +55,7 @@ function health_check() {
         error_log=$(grep "$keyword" "$FASTDFS_LOG_FILE")
         if [ ! -z "$error_log" ]; then
             cat /dev/null > "$FASTDFS_LOG_FILE"
-            fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf stop && \
+            fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf stop
             fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf start
         fi
         sleep 5
