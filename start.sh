@@ -48,8 +48,23 @@ function nginx_set () {
     /usr/local/nginx/sbin/nginx
 }
 
+function health_check() {
+    # if have error logs, restart.
+    keyword='ERROR'
+    while true; do
+        error_log=$(grep "$keyword" "$FASTDFS_LOG_FILE")
+        if [ ! -z "$error_log" ]; then
+            cat /dev/null > "$FASTDFS_LOG_FILE"
+            fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf stop && \
+            fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf start
+        fi
+        sleep 5
+    done
+}
+
 fdfs_set $*
 nginx_set $*
+health_check &
 
 # wait for pid file(important!),the max start time is 5 seconds,if the pid number does not appear in 5 seconds,start failed.
 TIMES=5
