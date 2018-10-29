@@ -49,16 +49,17 @@ function nginx_set () {
 }
 
 function health_check() {
-    # if have error logs, restart.
-    keyword='ERROR'
+    # if have not foud tracker server, restart storage.
+    keyword='connect to tracker server.*No route to host'
     while true; do
-        error_log=$(grep "$keyword" "$FASTDFS_LOG_FILE")
+        error_log=$(egrep "$keyword" "$FASTDFS_LOG_FILE")
         if [ ! -z "$error_log" ]; then
             cat /dev/null > "$FASTDFS_LOG_FILE"
             fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf stop
             fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf start
+            echo $error_log
         fi
-        sleep 5
+        sleep 10
     done
 }
 
