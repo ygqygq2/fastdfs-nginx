@@ -49,15 +49,18 @@ function nginx_set () {
 }
 
 function health_check() {
-    # if have not foud tracker server, restart storage.
-    keyword='connect to tracker server.*No route to host'
+    if [ $HOSTNAME = "localhost.localdomain" ]; then
+        return 0
+    fi
+    # Storage OFFLINE, restart storage.
+    check_log=/tmp/health_check.log
     while true; do
-        error_log=$(egrep "$keyword" "$FASTDFS_LOG_FILE")
+        fdfs_monitor /etc/fdfs/client.conf|grep $HOSTNAME > $check_log
+        error_log=$(egrep "OFFLINE" "$FASTDFS_LOG_FILE")
         if [ ! -z "$error_log" ]; then
             cat /dev/null > "$FASTDFS_LOG_FILE"
             fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf stop
             fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf start
-            echo $error_log
         fi
         sleep 10
     done
