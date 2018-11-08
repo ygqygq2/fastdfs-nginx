@@ -2,6 +2,9 @@
 #set -e
 
 GROUP_NAME=${GROUP_NAME:-group1}
+if [ -n "$GET_TRACKER_SERVER" ]; then
+    export TRACKER_SERVER=$(eval $GET_TRACKER_SERVER)
+fi
 
 function fdfs_set () {
     if [ "$1" = "monitor" ] ; then
