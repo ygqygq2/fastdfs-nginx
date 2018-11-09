@@ -56,9 +56,11 @@ function health_check() {
         return 0
     fi
     # Storage OFFLINE, restart storage.
+    monitor_log=/tmp/monitor.log
     check_log=/tmp/health_check.log
     while true; do
-        fdfs_monitor /etc/fdfs/client.conf|grep $HOSTNAME > $check_log
+        fdfs_monitor /etc/fdfs/client.conf 1>$monitor_log 2>&1
+        cat $monitor_log|grep $HOSTNAME > $check_log 2>&1
         error_log=$(egrep "OFFLINE" "$FASTDFS_LOG_FILE")
         if [ ! -z "$error_log" ]; then
             cat /dev/null > "$FASTDFS_LOG_FILE"
