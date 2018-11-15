@@ -61,7 +61,7 @@ function health_check() {
     while true; do
         fdfs_monitor /etc/fdfs/client.conf 1>$monitor_log 2>&1
         cat $monitor_log|grep $HOSTNAME > $check_log 2>&1
-        error_log=$(egrep "OFFLINE" "$FASTDFS_LOG_FILE")
+        error_log=$(egrep "OFFLINE" "$check_log")
         if [ ! -z "$error_log" ]; then
             cat /dev/null > "$FASTDFS_LOG_FILE"
             fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf stop
