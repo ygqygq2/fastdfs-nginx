@@ -8,7 +8,7 @@ networks:
 services:
   tracker:
     container_name: tracker
-    image: ygqygq2/fastdfs-nginx:V5.12
+    image: ygqygq2/fastdfs-nginx:latest
     command: tracker
     #network_mode: host
     networks:
@@ -17,7 +17,7 @@ services:
       - /var/fdfs/tracker:/var/fdfs    
   storage0:
     container_name: storage0
-    image: ygqygq2/fastdfs-nginx:V5.12
+    image: ygqygq2/fastdfs-nginx:latest
     command: storage
     #network_mode: host  
     networks:
@@ -28,7 +28,7 @@ services:
       - /var/fdfs/storage0:/var/fdfs
   # storage1:
   #   container_name: storage1
-  #   image: ygqygq2/fastdfs-nginx
+  #   image: ygqygq2/fastdfs-nginx:latest
   #   command: storage
   #   #network_mode: host  
   #   networks:
@@ -39,7 +39,7 @@ services:
   #     - /var/fdfs/storage1:/var/fdfs
   #  storage2:
   #   container_name: storage2
-  #   image: ygqygq2/fastdfs-nginx
+  #   image: ygqygq2/fastdfs-nginx:latest
   #   command: storage
   #   #network_mode: host  
   #   networks:
