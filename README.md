@@ -1,4 +1,4 @@
-# Docker for fastdfs
+# Docker for fastdfs-nginx
 
 [fastdfs](https://github.com/happyfish100/fastdfs)
 
