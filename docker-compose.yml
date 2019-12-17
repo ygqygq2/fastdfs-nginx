@@ -1,26 +1,38 @@
 version: '3'
+#networks:
+#  fastdfs-net:
+#    external: true
+networks:
+  fastdfs-net:
+    driver: bridge
 services:
   tracker:
     container_name: tracker
-    image: ygqygq2/fastdfs-nginx
+    image: ygqygq2/fastdfs-nginx:V5.12
     command: tracker
-    network_mode: host
+    #network_mode: host
+    networks:
+      - fastdfs-net
     volumes:   
       - /var/fdfs/tracker:/var/fdfs    
   storage0:
     container_name: storage0
-    image: ygqygq2/fastdfs-nginx
+    image: ygqygq2/fastdfs-nginx:V5.12
     command: storage
-    network_mode: host  
+    #network_mode: host  
+    networks:
+      - fastdfs-net
     environment:
-      - TRACKER_SERVER=10.1.5.85:22122
+      - TRACKER_SERVER=tracker:22122
     volumes: 
       - /var/fdfs/storage0:/var/fdfs
   # storage1:
   #   container_name: storage1
   #   image: ygqygq2/fastdfs-nginx
   #   command: storage
-  #   network_mode: host  
+  #   #network_mode: host  
+  #   networks:
+  #     - fastdfs-net
   #   environment:
   #     - TRACKER_SERVER=10.1.5.85:22122
   #   volumes: 
@@ -29,7 +41,9 @@ services:
   #   container_name: storage2
   #   image: ygqygq2/fastdfs-nginx
   #   command: storage
-  #   network_mode: host  
+  #   #network_mode: host  
+  #   networks:
+  #     - fastdfs-net  
   #   environment:
   #     - TRACKER_SERVER=10.1.5.85:22122
   #     - GROUP_NAME=group2
