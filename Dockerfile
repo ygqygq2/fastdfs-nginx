@@ -5,10 +5,10 @@ LABEL maintainer "29ygq@sina.com"
 
 ENV FASTDFS_PATH=/opt/fdfs \
   FASTDFS_BASE_PATH=/var/fdfs \
-  LIBFASTCOMMON_VERSION=V1.0.42 \
+  LIBFASTCOMMON_VERSION=V1.0.43 \
   FASTDFS_NGINX_MODULE_VERSION=V1.22 \
-  FASTDFS_VERSION=V6.04 \
-  NGINX_VERSION="1.17.3" \
+  FASTDFS_VERSION=V6.05 \
+  NGINX_VERSION="1.17.10" \
   TENGINE_VERSION="2.3.2" \
   PORT= \
   GROUP_NAME= \
@@ -64,7 +64,7 @@ COPY nginx_conf/nginx.conf /usr/local/nginx/conf/
 COPY start.sh /usr/bin/
 
 #make the start.sh executable 
-RUN chmod 777 /usr/bin/start.sh
+RUN chmod a+x /usr/bin/start.sh
 
 WORKDIR ${FASTDFS_PATH}
 
