@@ -43,17 +43,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-  docker_compose_test:
-    name: Docker compose deploy to test 
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v2
       - name: Docker Compose Action
         uses: isbang/compose-action@v1.0.0
         with:
-          compose-file: './docker/docker-compose.yml'
+          compose-file: './docker-compose.yml'
           down-flags: '--volumes'
