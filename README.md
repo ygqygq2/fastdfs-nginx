@@ -2,7 +2,7 @@
 
 [fastdfs](https://github.com/happyfish100/fastdfs)
 
-![Docker Automated build](https://img.shields.io/docker/cloud/automated/ygqygq2/fastdfs-nginx.svg) ![Docker Build Status](https://img.shields.io/docker/cloud/build/ygqygq2/fastdfs-nginx.svg) ![Docker Stars](https://img.shields.io/docker/stars/ygqygq2/fastdfs-nginx.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/ygqygq2/fastdfs-nginx.svg)
+[![Build Status](https://github.com/ygqygq2/fastdfs-nginx/workflows/Publish%20Docker%20image/badge.svg)](https://github.com/ygqygq2/fastdfs-nginx/actions) ![Docker Stars](https://img.shields.io/docker/stars/ygqygq2/fastdfs-nginx.svg) ![Docker Pulls](https://img.shields.io/docker/pulls/ygqygq2/fastdfs-nginx.svg)
 
 # Supported tags and respective `Dockerfile` links
 
