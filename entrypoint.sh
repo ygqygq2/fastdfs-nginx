@@ -38,10 +38,8 @@ function fdfs_set () {
     if [ -f "$FASTDFS_LOG_FILE" ]; then 
         rm "$FASTDFS_LOG_FILE"
     fi
-
     # start the fastdfs node.	
     fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf start
-    ln -s /dev/termination-log "$FASTDFS_LOG_FILE"
 }
 
 function nginx_set () {
@@ -50,6 +48,7 @@ function nginx_set () {
         cp -f /nginx_conf/conf.d/${FASTDFS_MODE}.conf /usr/local/nginx/conf/conf.d/
         sed -i "s|group1|${GROUP_NAME}|g" /usr/local/nginx/conf/conf.d/${FASTDFS_MODE}.conf
     fi
+    /usr/local/nginx/sbin/nginx
 }
 
 function health_check() {
@@ -84,7 +83,6 @@ do
     TIMES=`expr $TIMES - 1`
 done
 
-#tail -f "$FASTDFS_LOG_FILE"
-/usr/local/nginx/sbin/nginx -g "daemon off;"
+tail -f "$FASTDFS_LOG_FILE"
 
 exec "$@"
