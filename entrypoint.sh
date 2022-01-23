@@ -38,6 +38,9 @@ function fdfs_set () {
     if [ -f "$FASTDFS_LOG_FILE" ]; then 
         rm "$FASTDFS_LOG_FILE"
     fi
+
+    ln -s /dev/termination-log "$FASTDFS_LOG_FILE"
+
     # start the fastdfs node.	
     fdfs_${FASTDFS_MODE}d /etc/fdfs/${FASTDFS_MODE}.conf start
 }
@@ -83,6 +86,7 @@ do
     TIMES=`expr $TIMES - 1`
 done
 
-tail -f "$FASTDFS_LOG_FILE"
+#tail -f "$FASTDFS_LOG_FILE"
+exec /bin/bash
 
 exec "$@"
