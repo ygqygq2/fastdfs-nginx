@@ -48,10 +48,13 @@ RUN git clone -b $FASTDFS_NGINX_MODULE_VERSION https://github.com/happyfish100/f
   && wget http://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz \
   && tar -zxf tengine-${TENGINE_VERSION}.tar.gz \
   && cd tengine-${TENGINE_VERSION} \
-  && ./configure --prefix=/usr/local/nginx --add-module=${FASTDFS_PATH}/fastdfs-nginx-module/src/ \
+  && ./configure --prefix=/usr/local/nginx \
+      --add-module=${FASTDFS_PATH}/fastdfs-nginx-module/src/ \
+      --add-module=./modules/ngx_http_upstream_dynamic_module \
   && make \
   && make install \
   && ln -s /usr/local/nginx/sbin/nginx /usr/bin/ \
+  && rm -rf ${FASTDFS_PATH}/tengine-* \
   && rm -rf ${FASTDFS_PATH}/fastdfs-nginx-module 
 
 EXPOSE 22122 23000 8080 8888 80
@@ -61,12 +64,12 @@ COPY conf/*.* /etc/fdfs/
 COPY nginx_conf/ /nginx_conf/
 COPY nginx_conf/nginx.conf /usr/local/nginx/conf/
 
-COPY start.sh /usr/bin/
+COPY entrypoint.sh /usr/bin/
 
-#make the start.sh executable 
-RUN chmod a+x /usr/bin/start.sh
+#make the entrypoint.sh executable 
+RUN chmod a+x /usr/bin/entrypoint.sh
 
 WORKDIR ${FASTDFS_PATH}
 
-ENTRYPOINT ["/usr/bin/start.sh"]
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
 CMD ["tracker"]

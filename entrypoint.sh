@@ -84,3 +84,5 @@ do
 done
 
 tail -f "$FASTDFS_LOG_FILE"
+
+exec "$@"
