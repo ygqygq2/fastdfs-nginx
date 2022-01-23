@@ -49,6 +49,7 @@ RUN git clone -b $FASTDFS_NGINX_MODULE_VERSION https://github.com/happyfish100/f
   && tar -zxf tengine-${TENGINE_VERSION}.tar.gz \
   && cd tengine-${TENGINE_VERSION} \
   && ./configure --prefix=/usr/local/nginx \
+      --with-http_upstream_check_module \
       --add-module=${FASTDFS_PATH}/fastdfs-nginx-module/src/ \
       --add-module=./modules/ngx_http_upstream_dynamic_module \
   && make \
