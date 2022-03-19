@@ -45,7 +45,7 @@ RUN git clone -b $FASTDFS_VERSION https://github.com/happyfish100/fastdfs.git fa
 # nginx url: https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 # tengine url: http://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz
 RUN git clone -b $FASTDFS_NGINX_MODULE_VERSION https://github.com/happyfish100/fastdfs-nginx-module.git fastdfs-nginx-module \
-  && wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+  && wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
   && tar -zxf nginx-${NGINX_VERSION}.tar.gz \
   && cd nginx-${NGINX_VERSION} \
   && ./configure --prefix=/usr/local/nginx \
