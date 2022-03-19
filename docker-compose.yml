@@ -30,6 +30,8 @@ services:
       - /var/fdfs/storage0:/var/fdfs
     ports:
       - 28080:8080
+    depends_on:
+      - tracker
   storage1:
     container_name: storage1
     image: ygqygq2/fastdfs-nginx:latest
@@ -43,3 +45,5 @@ services:
       - /var/fdfs/storage1:/var/fdfs
     ports:
       - 28081:8080
+    depends_on:
+      - tracker
