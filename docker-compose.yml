@@ -15,6 +15,8 @@ services:
       - fastdfs-net
     volumes:   
       - /var/fdfs/tracker:/var/fdfs    
+    ports:
+      - 22122:22122
   storage0:
     container_name: storage0
     image: ygqygq2/fastdfs-nginx:latest
@@ -26,28 +28,18 @@ services:
       - TRACKER_SERVER=tracker:22122
     volumes: 
       - /var/fdfs/storage0:/var/fdfs
-  # storage1:
-  #   container_name: storage1
-  #   image: ygqygq2/fastdfs-nginx:latest
-  #   command: storage
-  #   #network_mode: host  
-  #   networks:
-  #     - fastdfs-net
-  #   environment:
-  #     - TRACKER_SERVER=10.1.5.85:22122
-  #   volumes: 
-  #     - /var/fdfs/storage1:/var/fdfs
-  #  storage2:
-  #   container_name: storage2
-  #   image: ygqygq2/fastdfs-nginx:latest
-  #   command: storage
-  #   #network_mode: host  
-  #   networks:
-  #     - fastdfs-net  
-  #   environment:
-  #     - TRACKER_SERVER=10.1.5.85:22122
-  #     - GROUP_NAME=group2
-  #     - PORT=24000
-  #   volumes: 
-  #     - /var/fdfs/storage2:/var/fdfs           
-                    
+    ports:
+      - 28080:8080
+  storage1:
+    container_name: storage1
+    image: ygqygq2/fastdfs-nginx:latest
+    command: storage
+    #network_mode: host  
+    networks:
+      - fastdfs-net
+    environment:
+      - TRACKER_SERVER=tracker:22122
+    volumes: 
+      - /var/fdfs/storage1:/var/fdfs
+    ports:
+      - 28081:8080
