@@ -8,7 +8,7 @@ ENV FASTDFS_PATH=/opt/fdfs \
   LIBFASTCOMMON_VERSION="V1.0.56" \
   FASTDFS_NGINX_MODULE_VERSION="V1.22" \
   FASTDFS_VERSION="V6.08" \
-  NGINX_VERSION="1.17.10" \
+  NGINX_VERSION="1.21.6" \
   TENGINE_VERSION="2.3.3" \
   PORT= \
   GROUP_NAME= \
@@ -45,9 +45,9 @@ RUN git clone -b $FASTDFS_VERSION https://github.com/happyfish100/fastdfs.git fa
 # nginx url: https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 # tengine url: http://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz
 RUN git clone -b $FASTDFS_NGINX_MODULE_VERSION https://github.com/happyfish100/fastdfs-nginx-module.git fastdfs-nginx-module \
-  && wget http://tengine.taobao.org/download/tengine-${TENGINE_VERSION}.tar.gz \
-  && tar -zxf tengine-${TENGINE_VERSION}.tar.gz \
-  && cd tengine-${TENGINE_VERSION} \
+  && wget https://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
+  && tar -zxf nginx-${NGINX_VERSION}.tar.gz \
+  && cd nginx-${NGINX_VERSION} \
   && ./configure --prefix=/usr/local/nginx \
       --add-module=${FASTDFS_PATH}/fastdfs-nginx-module/src/ \
       --add-module=./modules/ngx_http_upstream_dynamic_module \
@@ -55,7 +55,7 @@ RUN git clone -b $FASTDFS_NGINX_MODULE_VERSION https://github.com/happyfish100/f
   && make \
   && make install \
   && ln -s /usr/local/nginx/sbin/nginx /usr/bin/ \
-  && rm -rf ${FASTDFS_PATH}/tengine-* \
+  && rm -rf ${FASTDFS_PATH}/nginx-* \
   && rm -rf ${FASTDFS_PATH}/fastdfs-nginx-module 
 
 EXPOSE 22122 23000 8080 8888 80
