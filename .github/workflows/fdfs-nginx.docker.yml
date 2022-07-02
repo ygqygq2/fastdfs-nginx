@@ -1,6 +1,12 @@
 name: Publish Docker image
 
-on: [tags, pull_request]
+on: 
+  push:
+    tags:
+      - '**'
+  pull_request:
+    branches:
+      - main
 
 jobs:
   push_to_registries:
