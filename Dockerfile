@@ -5,10 +5,11 @@ LABEL maintainer "29ygq@sina.com"
 
 ENV FASTDFS_PATH=/opt/fdfs \
   FASTDFS_BASE_PATH=/var/fdfs \
-  LIBFASTCOMMON_VERSION="V1.0.56" \
-  FASTDFS_NGINX_MODULE_VERSION="V1.22" \
-  FASTDFS_VERSION="V6.08" \
-  NGINX_VERSION="1.21.6" \
+  LIBFASTCOMMON_VERSION="V1.0.60" \
+  LIBSERVERFRAME_VERSION="V1.1.19" \
+  FASTDFS_NGINX_MODULE_VERSION="V1.23" \
+  FASTDFS_VERSION="V6.09" \
+  NGINX_VERSION="1.22.1" \
   TENGINE_VERSION="2.3.3" \
   PORT= \
   GROUP_NAME= \
@@ -33,6 +34,13 @@ RUN git clone -b $LIBFASTCOMMON_VERSION https://github.com/happyfish100/libfastc
   && ./make.sh \
   && ./make.sh install \
   && rm -rf ${FASTDFS_PATH}/libfastcommon
+
+## compile the libserverframe
+RUN git clone -b $LIBSERVERFRAME_VERSION https://github.com/happyfish100/libserverframe.git libserverframe \
+  && cd libserverframe \
+  && ./make.sh \
+  && ./make.sh install \
+  && rm -rf ${FASTDFS_PATH}/libserverframe
 
 ## compile the fastdfs
 RUN git clone -b $FASTDFS_VERSION https://github.com/happyfish100/fastdfs.git fastdfs \
