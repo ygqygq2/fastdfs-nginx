@@ -1,12 +1,13 @@
 name: Publish Docker image
 
 on: 
-  push:
-    tags:
-      - '**'
-  pull_request:
-    branches:
-      - master
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'image tag'
+        required: true
+        default: 'test'
+        type: string
 
 jobs:
   push_to_registries:
@@ -38,23 +39,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            ghcr.io/${{ github.repository }}/fastdfs-nginx
-            ygqygq2/fastdfs-nginx
-
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
           context: ./
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+          tags: |
+            ygqygq2/fastdfs-nginx:{{ inputs.tag }}
 
       - name: Docker Compose Action
         uses: isbang/compose-action@v1.0.0
