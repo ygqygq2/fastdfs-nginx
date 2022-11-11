@@ -47,7 +47,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |
-            ygqygq2/fastdfs-nginx:{{ inputs.tag }}
+            ygqygq2/fastdfs-nginx:${{ inputs.tag }}
 
       - name: Docker Compose Action
         uses: isbang/compose-action@v1.0.0
