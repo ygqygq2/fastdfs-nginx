@@ -8,6 +8,11 @@ on:
         required: true
         default: 'test'
         type: string
+      dockerfile:
+        description: 'docker file'
+        required: true
+        default: './Dockerfile'
+        type: string
 
 jobs:
   push_to_registries:
@@ -43,7 +48,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: ./
-          file: ./Dockerfile
+          file: ${{ inputs.dockerfile }}
           push: true
           platforms: linux/amd64,linux/arm64
           tags: |

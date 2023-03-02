@@ -46,7 +46,17 @@ jobs:
             ghcr.io/${{ github.repository }}/fastdfs-nginx
             ygqygq2/fastdfs-nginx
 
-      - name: Build and push Docker images
+      - name: Build and push Docker images 1
+        uses: docker/build-push-action@v3
+        with:
+          context: ./
+          file: ./Dockerfile-tengine
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}-tengine
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/arm64            
+
+      - name: Build and push Docker images 2
         uses: docker/build-push-action@v3
         with:
           context: ./
