@@ -34,7 +34,7 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Log in to the Container registry
@@ -45,7 +45,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker images
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./
           file: ${{ inputs.dockerfile }}
@@ -55,7 +55,7 @@ jobs:
             ygqygq2/fastdfs-nginx:${{ inputs.tag }}
 
       - name: Docker Compose Action
-        uses: isbang/compose-action@v1.0.0
+        uses: isbang/compose-action@v1.4.1
         with:
           compose-file: './docker-compose.yml'
           down-flags: '--volumes'

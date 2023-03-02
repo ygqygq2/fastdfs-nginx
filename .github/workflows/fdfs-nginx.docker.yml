@@ -28,7 +28,7 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Log in to the Container registry
@@ -40,24 +40,31 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: |
             ghcr.io/${{ github.repository }}/fastdfs-nginx
             ygqygq2/fastdfs-nginx
 
+      - name: Convert fastdfs tengine tag
+        id: convert
+        run: |
+          DOCKER_METADATA_OUTPUT_NEW_TAGS=$(echo ${DOCKER_METADATA_OUTPUT_TAGS}-tengine|sed 's@ @-tengine,@g')
+          echo "DOCKER_METADATA_OUTPUT_NEW_TAGS: $DOCKER_METADATA_OUTPUT_NEW_TAGS"
+          echo "DOCKER_METADATA_OUTPUT_NEW_TAGS=${DOCKER_METADATA_OUTPUT_NEW_TAGS}" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker images 1
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./
           file: ./Dockerfile-tengine
           push: true
-          tags: ${{ steps.meta.outputs.tags }}-tengine
+          tags: ${{ steps.convert.outputs.DOCKER_METADATA_OUTPUT_NEW_TAGS }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64            
 
       - name: Build and push Docker images 2
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: ./
           file: ./Dockerfile
@@ -67,7 +74,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
       - name: Docker Compose Action
-        uses: isbang/compose-action@v1.0.0
+        uses: isbang/compose-action@v1.4.1
         with:
           compose-file: './docker-compose.yml'
           down-flags: '--volumes'
