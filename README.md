@@ -13,8 +13,17 @@
 ```
 docker network create fastdfs-net
 docker run -dit --network=fastdfs-net --name tracker -v /var/fdfs/tracker:/var/fdfs ygqygq2/fastdfs-nginx:latest tracker
-docker run -dit --network=fastdfs-net --name storage0 -e TRACKER_SERVER=tracker:22122 -v /var/fdfs/storage0:/var/fdfs ygqygq2/fastdfs-nginx:latest storage
-docker run -dit --network=fastdfs-net --name storage1 -e TRACKER_SERVER=tracker:22122 -v /var/fdfs/storage1:/var/fdfs ygqygq2/fastdfs-nginx:latest storage
+docker run -dit --network=fastdfs-net --name storage0 -e TRACKER_SERVER=tracker:22122 -p18080:8080 -v /var/fdfs/storage0:/var/fdfs ygqygq2/fastdfs-nginx:latest storage
+docker run -dit --network=fastdfs-net --name storage1 -e TRACKER_SERVER=tracker:22122 -p28080:8080 -v /var/fdfs/storage1:/var/fdfs ygqygq2/fastdfs-nginx:latest storage
+
+# 进入 storage 0 测试
+docker exec -it storage0 /bin/bash
+date > /tmp/test.html
+fdfs_upload_file /etc/fdfs/client.conf /tmp/test.html
+# 出现类似 group1/M00/00/00/rBMAA2RJ5XaAby7aAAAAHZb6r-461.html
+# 可以使用 curl 127.0.0.1:8080/group1/M00/00/00/rBMAA2RJ5XaAby7aAAAAHZb6r-461.html 访问
+
+# 外部使用浏览器打开 127.0.0.1:18080/group1/M00/00/00/rBMAA2RJ5XaAby7aAAAAHZb6r-461.html 访问
 ```
 
 ## Use docker-compose
