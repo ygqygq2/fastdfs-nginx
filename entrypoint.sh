@@ -81,8 +81,11 @@ function health_check() {
     done
 }
 
-fdfs_set $*
-nginx_set $*
+if [ "$CUSTOM_CONFIG" == "false" ]; then
+    fdfs_set $*
+    nginx_set $*
+fi
+
 fdfs_start
 health_check &
 

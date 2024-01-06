@@ -13,7 +13,8 @@ ENV FASTDFS_PATH=/opt/fdfs \
   TENGINE_VERSION="3.1.0" \
   PORT= \
   GROUP_NAME= \
-  TRACKER_SERVER=
+  TRACKER_SERVER= \
+  CUSTOM_CONFIG="false"
 
 #get all the dependences and nginx
 RUN yum install -y git gcc make wget pcre pcre-devel openssl openssl-devel \

@@ -26,6 +26,17 @@ fdfs_upload_file /etc/fdfs/client.conf /tmp/test.html
 # 外部使用浏览器打开 127.0.0.1:18080/group1/M00/00/00/rBMAA2RJ5XaAby7aAAAAHZb6r-461.html 访问
 ```
 
+## Env vars
+```
+|Env var name       |Effect                      |Default    |
+|-------------------|----------------------------|-----------|
+|PORT               |tracker/storage port        |22122/23000|
+|GROUP_NAME         |group name                  |`group1`   |
+|TRACKER_SERVER     |tracker server and port     |``         |
+|GET_TRACKER_SERVER |get tracker server command  |``         |
+|CUSTOM_CONFIG      |use your custom config file |`false`    |
+```
+
 ## Use docker-compose
 
 ```
