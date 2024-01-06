@@ -35,6 +35,11 @@ fdfs_upload_file /etc/fdfs/client.conf /tmp/test.html
 |GET_TRACKER_SERVER |get tracker server command  |``         |
 |CUSTOM_CONFIG      |use your custom config file |`false`    |
 
+> Tips:
+> * `CUSTOM_CONFIG` when not `false`, please map your config files/directory.
+> * Fastdfs config directory is `/etc/fdfs`.
+> * Nginx/Tengine server config directory is `/usr/local/nginx/conf/conf.d`, `nginx` use `include conf.d/*.conf;` include server files.
+
 ## Use docker-compose
 
 ```
