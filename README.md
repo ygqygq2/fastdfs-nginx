@@ -27,7 +27,6 @@ fdfs_upload_file /etc/fdfs/client.conf /tmp/test.html
 ```
 
 ## Env vars
-```
 |Env var name       |Effect                      |Default    |
 |-------------------|----------------------------|-----------|
 |PORT               |tracker/storage port        |22122/23000|
@@ -35,7 +34,6 @@ fdfs_upload_file /etc/fdfs/client.conf /tmp/test.html
 |TRACKER_SERVER     |tracker server and port     |``         |
 |GET_TRACKER_SERVER |get tracker server command  |``         |
 |CUSTOM_CONFIG      |use your custom config file |`false`    |
-```
 
 ## Use docker-compose
 
