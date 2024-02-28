@@ -61,7 +61,7 @@ jobs:
           push: true
           tags: ${{ steps.convert.outputs.DOCKER_METADATA_OUTPUT_NEW_TAGS }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64,linux/armv7,darwin       
+          platforms: linux/amd64,linux/arm64,linux/armv7
 
       - name: Build and push Docker images 2
         uses: docker/build-push-action@v4
@@ -71,7 +71,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/amd64,linux/arm64,linux/armv7,darwin
+          platforms: linux/amd64,linux/arm64,linux/armv7
 
       - name: Docker Compose Action
         uses: isbang/compose-action@v1.5.1
