@@ -46,6 +46,38 @@ fdfs_upload_file /etc/fdfs/client.conf /tmp/test.html
 docker-compose up -d
 ```
 
+> Tips:
+> * 使用 `network_mode: host` 时注意添加 hosts，最好是把所有节点 hosts 都添加上，而且 tracker 地址不能使用 127.0.0.1，可以使用内网 IP
+
+示例：
+```yaml
+version: '3'
+services:
+  tracker:
+    container_name: tracker
+    image: ygqygq2/fastdfs-nginx:latest
+    command: tracker
+    network_mode: host
+    volumes:
+      - /var/fdfs/tracker:/var/fdfs
+    ports:
+      - 22122:22122
+  storage0:
+    container_name: storage0
+    image: ygqygq2/fastdfs-nginx:latest
+    command: storage
+    network_mode: host
+    extra_hosts:
+      - "tracker:10.0.0.10"
+    environment:
+      - TRACKER_SERVER=tracker:22122
+    volumes:
+      - /var/fdfs/storage0:/var/fdfs
+      - 8080:8080
+    depends_on:
+      - tracker
+```
+
 # Fastdfs-nginx in kubernetes
 ```
 helm repo add ygqygq2 https://ygqygq2.github.io/charts/
