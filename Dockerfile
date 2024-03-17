@@ -5,10 +5,10 @@ LABEL maintainer "29ygq@sina.com"
 
 ENV FASTDFS_PATH=/opt/fdfs \
   FASTDFS_BASE_PATH=/var/fdfs \
-  LIBFASTCOMMON_VERSION="V1.0.72" \
-  LIBSERVERFRAME_VERSION="V1.2.2" \
+  LIBFASTCOMMON_VERSION="V1.0.73" \
+  LIBSERVERFRAME_VERSION="V1.2.3" \
   FASTDFS_NGINX_MODULE_VERSION="V1.24" \
-  FASTDFS_VERSION="V6.12.0" \
+  FASTDFS_VERSION="V6.12.1" \
   FREENGINX_VERSION="1.25.4" \
   TENGINE_VERSION="3.1.0" \
   PORT= \
@@ -17,7 +17,7 @@ ENV FASTDFS_PATH=/opt/fdfs \
   CUSTOM_CONFIG="false"
 
 # get all the dependences
-RUN apt-get update && apt-get install -y git gcc make wget libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev \
+RUN apt-get update && apt-get install -y curl git gcc make wget libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev \
   && rm -rf /var/lib/apt/lists/*
 
 # create the dirs to store the files downloaded from internet
